@@ -28,7 +28,7 @@ public class Main {
         ArrayList<Agent> pile1 = new ArrayList<>();
         ArrayList<Agent> pile2 = new ArrayList<>();
         ArrayList<Agent> pile3 = new ArrayList<>();
-        Collections.shuffle(agents, new Random(10));
+        Collections.shuffle(agents);
         for(Agent a : agents){
             pile1.add(a);
         }
