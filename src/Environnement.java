@@ -20,7 +20,7 @@ public class Environnement {
 
     /**
      * Initialise l'environnement.
-     * @param init dispotion initiale des agents. Si une pile est vide, elle doit tout de même se trouver dans la liste.
+     * @param init disposition initiale des agents. Si une pile est vide, elle doit tout de même se trouver dans la liste.
      */
     public Environnement(ArrayList<ArrayList<Agent>> init){
         emplacement = new HashMap<Agent, Integer>();
