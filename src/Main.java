@@ -1,6 +1,7 @@
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Random;
 import java.util.Scanner;
 
 public class Main {
@@ -27,7 +28,7 @@ public class Main {
         ArrayList<Agent> pile1 = new ArrayList<>();
         ArrayList<Agent> pile2 = new ArrayList<>();
         ArrayList<Agent> pile3 = new ArrayList<>();
-        Collections.shuffle(agents);
+        Collections.shuffle(agents, new Random(10));
         for(Agent a : agents){
             pile1.add(a);
         }
@@ -51,7 +52,7 @@ public class Main {
         else sma.runV2();
         double fin = (double) (System.nanoTime() - debut)/1000000;
 
-        System.out.println("Fin du programme. Temps de résolution : " + String.format("%.3g", fin) + "ms");
+        System.out.println("Fin du programme. Temps de résolution : " + fin + "ms");
         System.out.print("Appuyez sur Entrée pour terminer.");
         try {
             System.in.read();
