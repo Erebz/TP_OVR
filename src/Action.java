@@ -5,4 +5,7 @@ public abstract class Action {
         this.monde = e;
     }
     public abstract void executer();
+
+    @Override
+    public abstract String toString();
 }

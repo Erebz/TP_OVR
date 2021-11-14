@@ -1,5 +1,6 @@
 import java.util.HashMap;
 import java.util.ArrayList;
+import java.util.Objects;
 import java.util.Random;
 
 public class Environnement {
@@ -62,16 +63,18 @@ public class Environnement {
      * @param empl L'emplacement cible (index min : 0)
      */
     public void deplacer(Agent a, int empl){
-        int origine = emplacement.get(a);
-        emplacement.replace(a, empl);
-        Agent surQui = this.surQui.get(a); // agent sous l'agent en déplacement
-        Agent lastPile = pile.get(empl); // ancienne tête de pile destination avant le déplacement
-        this.surQui.replace(a, lastPile);
-        if (lastPile != null) this.sousQui.replace(lastPile, a);
-        if (surQui != null) this.sousQui.replace(surQui, null);
-        pile.replace(empl, a);
-        pile.replace(origine, surQui);
-        estPousse.replace(a, false);
+        if(this.sousQui.get(a) == null){
+            int origine = emplacement.get(a);
+            emplacement.replace(a, empl);
+            Agent surQui = this.surQui.get(a); // agent sous l'agent en déplacement
+            Agent lastPile = pile.get(empl); // ancienne tête de pile destination avant le déplacement
+            this.surQui.replace(a, lastPile);
+            if (lastPile != null) this.sousQui.replace(lastPile, a);
+            if (surQui != null) this.sousQui.replace(surQui, null);
+            pile.replace(empl, a);
+            pile.replace(origine, surQui);
+            estPousse.replace(a, false);
+        }
     }
 
     /**
@@ -104,5 +107,58 @@ public class Environnement {
         }while(choix == empl);
 
         return choix;
+    }
+
+    public int getEmplacementCible(Agent agent, Agent cible) {
+        for(int p : pile.keySet()){
+            Agent a = pile.get(p);
+            if((a == null && cible == null) || (a != null && a.equals(cible))){
+                return p;
+            }
+        }
+        return -1;
+    }
+
+    public int getEmplacementEvite(Agent agent, Agent evite) {
+        for(int p : pile.keySet()){
+            Agent a = pile.get(p);
+
+            if((a == null && evite != null) || (!Objects.equals(a, evite) && !a.equals(agent))){
+                return p;
+            }
+        }
+        return -1;
+    }
+
+    public ArrayList<ArrayList<Agent>> toArray(){
+        ArrayList<ArrayList<Agent>> piles = new ArrayList<>();
+        for(int p : this.pile.keySet()){
+            ArrayList<Agent> pile = new ArrayList<>();
+            Agent tete = this.pile.get(p);
+            if(tete != null){
+                pile.add(tete);
+                Agent next = tete;
+                while ((next = surQui.get(next)) != null){
+                    pile.add(next);
+                }
+            }
+            piles.add(pile);
+        }
+        return piles;
+    }
+
+    @Override
+    public String toString() {
+        ArrayList<ArrayList<Agent>> piles = this.toArray();
+        String s = "";
+        for(int i = 0; i < piles.size(); i++){
+            ArrayList<Agent> pile = piles.get(i);
+            s += "Pile " + (i+1) + " : [ ";
+            for (int j = 0; j < pile.size(); j++) {
+                s += pile.get(j).toString() + " ";
+            }
+            s += "]   ";
+        }
+        return s;
     }
 }

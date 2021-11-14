@@ -11,6 +11,10 @@ public class Perception {
         this.estLibre = estLibre;
     }
 
+    public Agent getObserveur() {
+        return observeur;
+    }
+
     public Agent getDessous() {
         return dessous;
     }

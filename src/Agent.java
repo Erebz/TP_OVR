@@ -1,5 +1,6 @@
-public class Agent {
+import java.util.Objects;
 
+public class Agent {
     private String id;
     private String but;
 
@@ -10,11 +11,7 @@ public class Agent {
 
     public Action getAction(Perception perception){
         Agent dessous = perception.getDessous();
-        if(perception.estPousse()){
-            System.out.println(">> "+ this + " : Je me fais pousser !!");
-        }
         if(isBut(dessous) && !perception.estPousse()){
-            System.out.println(">> "+ this + " : Tout va bien !!");
             return null;
         } else{
             if(perception.estLibre()){
@@ -39,6 +36,14 @@ public class Agent {
 
     @Override
     public String toString() {
-        return "Agent_" + id;
+        return id;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Agent agent = (Agent) o;
+        return Objects.equals(id, agent.id) && Objects.equals(but, agent.but);
     }
 }

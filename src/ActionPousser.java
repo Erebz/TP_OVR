@@ -8,6 +8,10 @@ public class ActionPousser extends Action{
     @Override
     public void executer() {
         super.monde.pousser(agent);
-        System.out.println("- "+agent+" pousse au dessus...");
+        //System.out.println("- "+agent+" pousse au dessus...");
+    }
+    @Override
+    public String toString() {
+        return "" + agent + " pousse.";
     }
 }
